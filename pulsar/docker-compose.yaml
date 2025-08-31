@@ -1,0 +1,25 @@
+version: '3.8'
+
+services:
+  pulsar:
+    image: apachepulsar/pulsar:4.0.6
+    ports:
+      - 6650:6650
+      - 8080:8080
+    volumes:
+      - pulsardata:/pulsar/data
+      - pulsarconf:/pulsar/conf
+    command: bin/pulsar standalone
+    environment:
+      - PULSAR_PREFIX_xxx=yyy
+      - PULSAR_PREFIX_diskUsageThreshold=0.9999999999   # raise threshold to 99.5%
+    restart: always
+    # logging:
+    #   driver: json-file
+    #   options:
+    #     max-size: 10m
+    #     max-file: 3
+volumes:
+  pulsardata:
+  pulsarconf:
+
