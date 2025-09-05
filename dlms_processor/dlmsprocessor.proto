@@ -10,7 +10,7 @@ service DLMSProcessor {
 }
 
 message GetOBISRequest {
-    Meter meter = 1;
+    repeated Meter meter = 1;
     string obis = 2;
 }
 

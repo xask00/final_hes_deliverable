@@ -23,7 +23,7 @@ const (
 
 type GetOBISRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Meter         *Meter                 `protobuf:"bytes,1,opt,name=meter,proto3" json:"meter,omitempty"`
+	Meter         []*Meter               `protobuf:"bytes,1,rep,name=meter,proto3" json:"meter,omitempty"`
 	Obis          string                 `protobuf:"bytes,2,opt,name=obis,proto3" json:"obis,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
@@ -59,7 +59,7 @@ func (*GetOBISRequest) Descriptor() ([]byte, []int) {
 	return file_dlmsprocessor_proto_rawDescGZIP(), []int{0}
 }
 
-func (x *GetOBISRequest) GetMeter() *Meter {
+func (x *GetOBISRequest) GetMeter() []*Meter {
 	if x != nil {
 		return x.Meter
 	}
@@ -183,7 +183,7 @@ const file_dlmsprocessor_proto_rawDesc = "" +
 	"\n" +
 	"\x13dlmsprocessor.proto\x12\rdlmsprocessor\"P\n" +
 	"\x0eGetOBISRequest\x12*\n" +
-	"\x05meter\x18\x01 \x01(\v2\x14.dlmsprocessor.MeterR\x05meter\x12\x12\n" +
+	"\x05meter\x18\x01 \x03(\v2\x14.dlmsprocessor.MeterR\x05meter\x12\x12\n" +
 	"\x04obis\x18\x02 \x01(\tR\x04obis\"?\n" +
 	"\x05Meter\x12\x0e\n" +
 	"\x02ip\x18\x01 \x01(\tR\x02ip\x12\x12\n" +
