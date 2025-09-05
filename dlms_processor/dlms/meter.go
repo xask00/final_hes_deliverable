@@ -1,7 +1,5 @@
 package dlms
 
-import "strconv"
-
 type Meter interface {
 	GetOBIS(obis string) (string, error)
 	SetClock(clock string) error
@@ -22,7 +20,7 @@ func NewFakeMeter(ipv6 string, port int) (*FakeMeter, error) {
 }
 
 func (m *FakeMeter) GetOBIS(obis string) (string, error) {
-	return m.ipv6 + ":" + strconv.Itoa(m.port) + "123", nil
+	return obis, nil
 }
 
 func (m *FakeMeter) SetClock(clock string) error {

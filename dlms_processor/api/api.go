@@ -3,6 +3,7 @@ package api
 import (
 	"dlmsprocessor/dlms"
 	"dlmsprocessor/proto"
+	"sync"
 
 	"google.golang.org/grpc"
 )
@@ -16,19 +17,41 @@ func NewDLMSProcessorAPI() *DLMSProcessorAPI {
 }
 
 func (s *DLMSProcessorAPI) GetOBIS(req *proto.GetOBISRequest, stream grpc.ServerStreamingServer[proto.GetOBISResponse]) error {
+	var wg sync.WaitGroup
+	errChan := make(chan error, len(req.Meter))
+
 	for _, reqMeter := range req.Meter {
-		go func(reqMeter *proto.Meter) error {
+		wg.Add(1)
+		go func(reqMeter *proto.Meter) {
+			defer wg.Done()
+
 			meter, err := dlms.NewFakeMeter(reqMeter.Ip, int(reqMeter.Port))
 			if err != nil {
-				return err
+				errChan <- err
+				return
 			}
-			_, err = meter.GetOBIS(req.Obis)
+
+			obis, err := meter.GetOBIS(reqMeter.Obis)
 			if err != nil {
-				return err
+				errChan <- err
+				return
 			}
-			stream.Send(&proto.GetOBISResponse{Value: reqMeter.Obis})
-			return nil
+
+			err = stream.Send(&proto.GetOBISResponse{Value: obis})
+			if err != nil {
+				errChan <- err
+				return
+			}
 		}(reqMeter)
 	}
-	return nil
+
+	wg.Wait()
+
+	// Check for any errors
+	select {
+	case err := <-errChan:
+		return err
+	default:
+		return nil
+	}
 }
