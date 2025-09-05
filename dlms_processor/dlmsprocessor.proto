@@ -17,7 +17,7 @@ message GetOBISRequest {
 
     int32 retries = 4;
     int32 retryDelay = 5;
-    int32 timeout = 6;
+    int32 connectionTimeout = 6;
 }
 
 message Meter {
