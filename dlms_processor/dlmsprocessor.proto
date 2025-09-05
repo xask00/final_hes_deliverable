@@ -1,0 +1,25 @@
+syntax = "proto3";
+
+package dlmsprocessor;
+
+option go_package = "dlmsprocessor/proto";
+
+
+service DLMSProcessor {
+    rpc GetOBIS(GetOBISRequest) returns (stream GetOBISResponse);
+}
+
+message GetOBISRequest {
+    Meter meter = 1;
+    string obis = 2;
+}
+
+message Meter {
+    string ip = 1;
+    int32 port = 2;
+    string obis = 3;
+}
+
+message GetOBISResponse {
+    string value = 1;
+}
