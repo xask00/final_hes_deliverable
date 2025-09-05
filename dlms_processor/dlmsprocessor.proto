@@ -10,14 +10,29 @@ service DLMSProcessor {
 }
 
 message GetOBISRequest {
+
     repeated Meter meter = 1;
+
     string obis = 2;
+
+    int32 retries = 4;
+    int32 retryDelay = 5;
+    int32 timeout = 6;
 }
 
 message Meter {
     string ip = 1;
     int32 port = 2;
     string obis = 3;
+
+    string systemTitle = 4;
+    string authPassword = 5;
+
+    string authKey = 6;
+    string blockCipherKey = 7;
+
+    string clientAddress = 8;
+    string serverAddress = 9;
 }
 
 message GetOBISResponse {

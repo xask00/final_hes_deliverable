@@ -25,6 +25,9 @@ type GetOBISRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Meter         []*Meter               `protobuf:"bytes,1,rep,name=meter,proto3" json:"meter,omitempty"`
 	Obis          string                 `protobuf:"bytes,2,opt,name=obis,proto3" json:"obis,omitempty"`
+	Retries       int32                  `protobuf:"varint,4,opt,name=retries,proto3" json:"retries,omitempty"`
+	RetryDelay    int32                  `protobuf:"varint,5,opt,name=retryDelay,proto3" json:"retryDelay,omitempty"`
+	Timeout       int32                  `protobuf:"varint,6,opt,name=timeout,proto3" json:"timeout,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -73,13 +76,40 @@ func (x *GetOBISRequest) GetObis() string {
 	return ""
 }
 
+func (x *GetOBISRequest) GetRetries() int32 {
+	if x != nil {
+		return x.Retries
+	}
+	return 0
+}
+
+func (x *GetOBISRequest) GetRetryDelay() int32 {
+	if x != nil {
+		return x.RetryDelay
+	}
+	return 0
+}
+
+func (x *GetOBISRequest) GetTimeout() int32 {
+	if x != nil {
+		return x.Timeout
+	}
+	return 0
+}
+
 type Meter struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Ip            string                 `protobuf:"bytes,1,opt,name=ip,proto3" json:"ip,omitempty"`
-	Port          int32                  `protobuf:"varint,2,opt,name=port,proto3" json:"port,omitempty"`
-	Obis          string                 `protobuf:"bytes,3,opt,name=obis,proto3" json:"obis,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	state          protoimpl.MessageState `protogen:"open.v1"`
+	Ip             string                 `protobuf:"bytes,1,opt,name=ip,proto3" json:"ip,omitempty"`
+	Port           int32                  `protobuf:"varint,2,opt,name=port,proto3" json:"port,omitempty"`
+	Obis           string                 `protobuf:"bytes,3,opt,name=obis,proto3" json:"obis,omitempty"`
+	SystemTitle    string                 `protobuf:"bytes,4,opt,name=systemTitle,proto3" json:"systemTitle,omitempty"`
+	AuthPassword   string                 `protobuf:"bytes,5,opt,name=authPassword,proto3" json:"authPassword,omitempty"`
+	AuthKey        string                 `protobuf:"bytes,6,opt,name=authKey,proto3" json:"authKey,omitempty"`
+	BlockCipherKey string                 `protobuf:"bytes,7,opt,name=blockCipherKey,proto3" json:"blockCipherKey,omitempty"`
+	ClientAddress  string                 `protobuf:"bytes,8,opt,name=clientAddress,proto3" json:"clientAddress,omitempty"`
+	ServerAddress  string                 `protobuf:"bytes,9,opt,name=serverAddress,proto3" json:"serverAddress,omitempty"`
+	unknownFields  protoimpl.UnknownFields
+	sizeCache      protoimpl.SizeCache
 }
 
 func (x *Meter) Reset() {
@@ -133,6 +163,48 @@ func (x *Meter) GetObis() string {
 	return ""
 }
 
+func (x *Meter) GetSystemTitle() string {
+	if x != nil {
+		return x.SystemTitle
+	}
+	return ""
+}
+
+func (x *Meter) GetAuthPassword() string {
+	if x != nil {
+		return x.AuthPassword
+	}
+	return ""
+}
+
+func (x *Meter) GetAuthKey() string {
+	if x != nil {
+		return x.AuthKey
+	}
+	return ""
+}
+
+func (x *Meter) GetBlockCipherKey() string {
+	if x != nil {
+		return x.BlockCipherKey
+	}
+	return ""
+}
+
+func (x *Meter) GetClientAddress() string {
+	if x != nil {
+		return x.ClientAddress
+	}
+	return ""
+}
+
+func (x *Meter) GetServerAddress() string {
+	if x != nil {
+		return x.ServerAddress
+	}
+	return ""
+}
+
 type GetOBISResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Value         string                 `protobuf:"bytes,1,opt,name=value,proto3" json:"value,omitempty"`
@@ -181,14 +253,25 @@ var File_dlmsprocessor_proto protoreflect.FileDescriptor
 
 const file_dlmsprocessor_proto_rawDesc = "" +
 	"\n" +
-	"\x13dlmsprocessor.proto\x12\rdlmsprocessor\"P\n" +
+	"\x13dlmsprocessor.proto\x12\rdlmsprocessor\"\xa4\x01\n" +
 	"\x0eGetOBISRequest\x12*\n" +
 	"\x05meter\x18\x01 \x03(\v2\x14.dlmsprocessor.MeterR\x05meter\x12\x12\n" +
-	"\x04obis\x18\x02 \x01(\tR\x04obis\"?\n" +
+	"\x04obis\x18\x02 \x01(\tR\x04obis\x12\x18\n" +
+	"\aretries\x18\x04 \x01(\x05R\aretries\x12\x1e\n" +
+	"\n" +
+	"retryDelay\x18\x05 \x01(\x05R\n" +
+	"retryDelay\x12\x18\n" +
+	"\atimeout\x18\x06 \x01(\x05R\atimeout\"\x93\x02\n" +
 	"\x05Meter\x12\x0e\n" +
 	"\x02ip\x18\x01 \x01(\tR\x02ip\x12\x12\n" +
 	"\x04port\x18\x02 \x01(\x05R\x04port\x12\x12\n" +
-	"\x04obis\x18\x03 \x01(\tR\x04obis\"'\n" +
+	"\x04obis\x18\x03 \x01(\tR\x04obis\x12 \n" +
+	"\vsystemTitle\x18\x04 \x01(\tR\vsystemTitle\x12\"\n" +
+	"\fauthPassword\x18\x05 \x01(\tR\fauthPassword\x12\x18\n" +
+	"\aauthKey\x18\x06 \x01(\tR\aauthKey\x12&\n" +
+	"\x0eblockCipherKey\x18\a \x01(\tR\x0eblockCipherKey\x12$\n" +
+	"\rclientAddress\x18\b \x01(\tR\rclientAddress\x12$\n" +
+	"\rserverAddress\x18\t \x01(\tR\rserverAddress\"'\n" +
 	"\x0fGetOBISResponse\x12\x14\n" +
 	"\x05value\x18\x01 \x01(\tR\x05value2[\n" +
 	"\rDLMSProcessor\x12J\n" +
