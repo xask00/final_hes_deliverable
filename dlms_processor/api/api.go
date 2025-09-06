@@ -3,9 +3,12 @@ package api
 import (
 	"dlmsprocessor/dlms"
 	"dlmsprocessor/proto"
+	"log/slog"
 	"sync"
 
 	"google.golang.org/grpc"
+	"google.golang.org/grpc/codes"
+	"google.golang.org/grpc/status"
 )
 
 type DLMSProcessorAPI struct {
@@ -17,6 +20,11 @@ func NewDLMSProcessorAPI() *DLMSProcessorAPI {
 }
 
 func (s *DLMSProcessorAPI) GetOBIS(req *proto.GetOBISRequest, stream grpc.ServerStreamingServer[proto.GetOBISResponse]) error {
+
+	if len(req.Meter) == 0 {
+		return status.Error(codes.InvalidArgument, "no meters provided")
+	}
+
 	var wg sync.WaitGroup
 	errChan := make(chan error, len(req.Meter))
 
@@ -25,10 +33,11 @@ func (s *DLMSProcessorAPI) GetOBIS(req *proto.GetOBISRequest, stream grpc.Server
 		go func(reqMeter *proto.Meter) {
 			defer wg.Done()
 
+			slog.Info("NewFakeMeter", "ip", reqMeter.Ip, "port", reqMeter.Port)
 			meter, err := dlms.NewFakeMeter(reqMeter.Ip, int(reqMeter.Port))
 			if err != nil {
+				slog.Error("NewFakeMeter", "error", err)
 				errChan <- err
-				return
 			}
 
 			obis, err := meter.GetOBIS(reqMeter.Obis)
