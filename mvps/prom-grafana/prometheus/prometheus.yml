@@ -1,0 +1,25 @@
+global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+
+rule_files:
+  # - "first_rules.yml"
+  # - "second_rules.yml"
+
+scrape_configs:
+  - job_name: 'prometheus'
+    static_configs:
+      - targets: ['localhost:9090']
+
+  - job_name: 'node-exporter'
+    static_configs:
+      - targets: ['node-exporter:9100']
+
+  # Add your application metrics endpoints here
+  # - job_name: 'dlms-processor'
+  #   static_configs:
+  #     - targets: ['host.docker.internal:8080']
+  
+  # - job_name: 'dlms-consumer'
+  #   static_configs:
+  #     - targets: ['host.docker.internal:8081']
