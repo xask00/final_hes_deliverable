@@ -1,5 +1,10 @@
 package dlms
 
+import (
+	"errors"
+	"log/slog"
+)
+
 type Meter interface {
 	GetOBIS(obis string) (string, error)
 	SetClock(clock string) error
@@ -13,6 +18,17 @@ type FakeMeter struct {
 }
 
 func NewFakeMeter(ipv6 string, port int) (*FakeMeter, error) {
+	slog.Info("NewFakeMeter", "ipv6", ipv6, "port", port)
+	if ipv6 == "" {
+		slog.Error("ipv6 is required")
+		return nil, errors.New("ipv6 is required")
+	}
+
+	if port == 0 {
+		slog.Error("port is required")
+		return nil, errors.New("port is required")
+	}
+
 	return &FakeMeter{
 		ipv6: ipv6,
 		port: port,

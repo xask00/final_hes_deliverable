@@ -6,6 +6,8 @@ package main
 
 //go:generate protoc --go_opt=module=dlmsprocessor --go-grpc_opt=module=dlmsprocessor --go_out=./ --go-grpc_out=./ --proto_path=./ dlmsprocessor.proto
 
+//go:generate protoc --go_opt=module=dlmsprocessor --go-grpc_opt=module=dlmsprocessor --go_out=../dlms_consumer/ --go-grpc_out=../dlms_consumer/ --proto_path=./ dlmsprocessor.proto
+
 // This generates JS code from .proto files
 // //go:generate protoc --ts_opt=no_namespace --ts_opt=unary_rpc_promise=true --ts_opt=target=web --ts_out=../../frontend/proto/ --proto_path=../../proto chatservice.proto
 
