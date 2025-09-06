@@ -1,0 +1,2 @@
+-- PostgreSQL seed data for model metadata
+-- Combined data from SQLite seed files 1_chat_models.up.sql and 2_gpt5.up.sql

@@ -30,14 +30,14 @@ func main() {
 
 	fmt.Println("Getting OBIS")
 	stream, err := client.GetOBIS(context.Background(), &proto.GetOBISRequest{
-		// Meter: []*proto.Meter{
-		// 	{
-		// 		Ip:   "192.168.1.100",
-		// 		Port: 4059,
-		// 		Obis: "1.0.1.8.0.255",
-		// 	},
-		// },
-		//Obis: "1.0.1.8.0.255",
+		Meter: []*proto.Meter{
+			{
+				Ip:   "192.168.1.100",
+				Port: 4059,
+				Obis: "1.0.1.8.0.255",
+			},
+		},
+		Obis: "1.0.1.8.0.255",
 	})
 
 	// Method 1: Check error code using status.FromError() and Code()
