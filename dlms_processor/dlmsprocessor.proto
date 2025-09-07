@@ -7,6 +7,7 @@ option go_package = "dlmsprocessor/proto";
 
 service DLMSProcessor {
     rpc GetOBIS(GetOBISRequest) returns (stream GetOBISResponse);
+    rpc GetBlockLoadProfile(GetBlockLoadProfileRequest) returns (stream GetBlockLoadProfileResponse);
 }
 
 message GetOBISRequest {
@@ -37,4 +38,28 @@ message Meter {
 
 message GetOBISResponse {
     string value = 1;
+}
+
+message GetBlockLoadProfileRequest {
+    repeated Meter meter = 1;
+    
+    int32 retries = 2;
+    int32 retryDelay = 3;
+    int32 connectionTimeout = 4;
+}
+
+message GetBlockLoadProfileResponse {
+    BlockLoadProfile profile = 1;
+    string meterIp = 2;  // To identify which meter the profile came from
+}
+
+message BlockLoadProfile {
+    string dateTime = 1;                  // Real Time Clock (corrected OBIS: 0.0.1.0.0.255)
+    double averageVoltage = 2;            // Average Voltage (OBIS: 1.0.12.27.0.255)
+    double blockEnergyWhImport = 3;       // Block energy Wh-(import) (OBIS: 1.0.1.29.0.255)
+    double blockEnergyVahImport = 4;      // Block energy VAh-(import) (OBIS: 1.0.9.29.0.255)
+    double blockEnergyWhExport = 5;       // Block energy Wh-export (OBIS: 1.0.2.29.0.255)
+    double blockEnergyVahExport = 6;      // Block energy VAh-export (OBIS: 1.0.10.29.0.255)
+    double averageCurrent = 7;            // Average Current (OBIS: 1.0.11.27.0.255)
+    uint32 meterHealthIndicator = 8;      // Meter Health Indicator (OBIS: 0.0.96.10.1.255)
 }

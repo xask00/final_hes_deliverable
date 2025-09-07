@@ -19,7 +19,8 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	DLMSProcessor_GetOBIS_FullMethodName = "/dlmsprocessor.DLMSProcessor/GetOBIS"
+	DLMSProcessor_GetOBIS_FullMethodName             = "/dlmsprocessor.DLMSProcessor/GetOBIS"
+	DLMSProcessor_GetBlockLoadProfile_FullMethodName = "/dlmsprocessor.DLMSProcessor/GetBlockLoadProfile"
 )
 
 // DLMSProcessorClient is the client API for DLMSProcessor service.
@@ -27,6 +28,7 @@ const (
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type DLMSProcessorClient interface {
 	GetOBIS(ctx context.Context, in *GetOBISRequest, opts ...grpc.CallOption) (grpc.ServerStreamingClient[GetOBISResponse], error)
+	GetBlockLoadProfile(ctx context.Context, in *GetBlockLoadProfileRequest, opts ...grpc.CallOption) (grpc.ServerStreamingClient[GetBlockLoadProfileResponse], error)
 }
 
 type dLMSProcessorClient struct {
@@ -56,11 +58,31 @@ func (c *dLMSProcessorClient) GetOBIS(ctx context.Context, in *GetOBISRequest, o
 // This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
 type DLMSProcessor_GetOBISClient = grpc.ServerStreamingClient[GetOBISResponse]
 
+func (c *dLMSProcessorClient) GetBlockLoadProfile(ctx context.Context, in *GetBlockLoadProfileRequest, opts ...grpc.CallOption) (grpc.ServerStreamingClient[GetBlockLoadProfileResponse], error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	stream, err := c.cc.NewStream(ctx, &DLMSProcessor_ServiceDesc.Streams[1], DLMSProcessor_GetBlockLoadProfile_FullMethodName, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	x := &grpc.GenericClientStream[GetBlockLoadProfileRequest, GetBlockLoadProfileResponse]{ClientStream: stream}
+	if err := x.ClientStream.SendMsg(in); err != nil {
+		return nil, err
+	}
+	if err := x.ClientStream.CloseSend(); err != nil {
+		return nil, err
+	}
+	return x, nil
+}
+
+// This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
+type DLMSProcessor_GetBlockLoadProfileClient = grpc.ServerStreamingClient[GetBlockLoadProfileResponse]
+
 // DLMSProcessorServer is the server API for DLMSProcessor service.
 // All implementations must embed UnimplementedDLMSProcessorServer
 // for forward compatibility.
 type DLMSProcessorServer interface {
 	GetOBIS(*GetOBISRequest, grpc.ServerStreamingServer[GetOBISResponse]) error
+	GetBlockLoadProfile(*GetBlockLoadProfileRequest, grpc.ServerStreamingServer[GetBlockLoadProfileResponse]) error
 	mustEmbedUnimplementedDLMSProcessorServer()
 }
 
@@ -73,6 +95,9 @@ type UnimplementedDLMSProcessorServer struct{}
 
 func (UnimplementedDLMSProcessorServer) GetOBIS(*GetOBISRequest, grpc.ServerStreamingServer[GetOBISResponse]) error {
 	return status.Errorf(codes.Unimplemented, "method GetOBIS not implemented")
+}
+func (UnimplementedDLMSProcessorServer) GetBlockLoadProfile(*GetBlockLoadProfileRequest, grpc.ServerStreamingServer[GetBlockLoadProfileResponse]) error {
+	return status.Errorf(codes.Unimplemented, "method GetBlockLoadProfile not implemented")
 }
 func (UnimplementedDLMSProcessorServer) mustEmbedUnimplementedDLMSProcessorServer() {}
 func (UnimplementedDLMSProcessorServer) testEmbeddedByValue()                       {}
@@ -106,6 +131,17 @@ func _DLMSProcessor_GetOBIS_Handler(srv interface{}, stream grpc.ServerStream) e
 // This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
 type DLMSProcessor_GetOBISServer = grpc.ServerStreamingServer[GetOBISResponse]
 
+func _DLMSProcessor_GetBlockLoadProfile_Handler(srv interface{}, stream grpc.ServerStream) error {
+	m := new(GetBlockLoadProfileRequest)
+	if err := stream.RecvMsg(m); err != nil {
+		return err
+	}
+	return srv.(DLMSProcessorServer).GetBlockLoadProfile(m, &grpc.GenericServerStream[GetBlockLoadProfileRequest, GetBlockLoadProfileResponse]{ServerStream: stream})
+}
+
+// This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
+type DLMSProcessor_GetBlockLoadProfileServer = grpc.ServerStreamingServer[GetBlockLoadProfileResponse]
+
 // DLMSProcessor_ServiceDesc is the grpc.ServiceDesc for DLMSProcessor service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -117,6 +153,11 @@ var DLMSProcessor_ServiceDesc = grpc.ServiceDesc{
 		{
 			StreamName:    "GetOBIS",
 			Handler:       _DLMSProcessor_GetOBIS_Handler,
+			ServerStreams: true,
+		},
+		{
+			StreamName:    "GetBlockLoadProfile",
+			Handler:       _DLMSProcessor_GetBlockLoadProfile_Handler,
 			ServerStreams: true,
 		},
 	},
