@@ -19,8 +19,11 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	DLMSProcessor_GetOBIS_FullMethodName             = "/dlmsprocessor.DLMSProcessor/GetOBIS"
-	DLMSProcessor_GetBlockLoadProfile_FullMethodName = "/dlmsprocessor.DLMSProcessor/GetBlockLoadProfile"
+	DLMSProcessor_GetOBIS_FullMethodName                 = "/dlmsprocessor.DLMSProcessor/GetOBIS"
+	DLMSProcessor_GetBlockLoadProfile_FullMethodName     = "/dlmsprocessor.DLMSProcessor/GetBlockLoadProfile"
+	DLMSProcessor_GetDailyLoadProfile_FullMethodName     = "/dlmsprocessor.DLMSProcessor/GetDailyLoadProfile"
+	DLMSProcessor_GetBillingDataProfile_FullMethodName   = "/dlmsprocessor.DLMSProcessor/GetBillingDataProfile"
+	DLMSProcessor_GetInstantaneousProfile_FullMethodName = "/dlmsprocessor.DLMSProcessor/GetInstantaneousProfile"
 )
 
 // DLMSProcessorClient is the client API for DLMSProcessor service.
@@ -29,6 +32,9 @@ const (
 type DLMSProcessorClient interface {
 	GetOBIS(ctx context.Context, in *GetOBISRequest, opts ...grpc.CallOption) (grpc.ServerStreamingClient[GetOBISResponse], error)
 	GetBlockLoadProfile(ctx context.Context, in *GetBlockLoadProfileRequest, opts ...grpc.CallOption) (grpc.ServerStreamingClient[GetBlockLoadProfileResponse], error)
+	GetDailyLoadProfile(ctx context.Context, in *GetDailyLoadProfileRequest, opts ...grpc.CallOption) (grpc.ServerStreamingClient[GetDailyLoadProfileResponse], error)
+	GetBillingDataProfile(ctx context.Context, in *GetBillingDataProfileRequest, opts ...grpc.CallOption) (grpc.ServerStreamingClient[GetBillingDataProfileResponse], error)
+	GetInstantaneousProfile(ctx context.Context, in *GetInstantaneousProfileRequest, opts ...grpc.CallOption) (grpc.ServerStreamingClient[GetInstantaneousProfileResponse], error)
 }
 
 type dLMSProcessorClient struct {
@@ -77,12 +83,72 @@ func (c *dLMSProcessorClient) GetBlockLoadProfile(ctx context.Context, in *GetBl
 // This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
 type DLMSProcessor_GetBlockLoadProfileClient = grpc.ServerStreamingClient[GetBlockLoadProfileResponse]
 
+func (c *dLMSProcessorClient) GetDailyLoadProfile(ctx context.Context, in *GetDailyLoadProfileRequest, opts ...grpc.CallOption) (grpc.ServerStreamingClient[GetDailyLoadProfileResponse], error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	stream, err := c.cc.NewStream(ctx, &DLMSProcessor_ServiceDesc.Streams[2], DLMSProcessor_GetDailyLoadProfile_FullMethodName, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	x := &grpc.GenericClientStream[GetDailyLoadProfileRequest, GetDailyLoadProfileResponse]{ClientStream: stream}
+	if err := x.ClientStream.SendMsg(in); err != nil {
+		return nil, err
+	}
+	if err := x.ClientStream.CloseSend(); err != nil {
+		return nil, err
+	}
+	return x, nil
+}
+
+// This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
+type DLMSProcessor_GetDailyLoadProfileClient = grpc.ServerStreamingClient[GetDailyLoadProfileResponse]
+
+func (c *dLMSProcessorClient) GetBillingDataProfile(ctx context.Context, in *GetBillingDataProfileRequest, opts ...grpc.CallOption) (grpc.ServerStreamingClient[GetBillingDataProfileResponse], error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	stream, err := c.cc.NewStream(ctx, &DLMSProcessor_ServiceDesc.Streams[3], DLMSProcessor_GetBillingDataProfile_FullMethodName, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	x := &grpc.GenericClientStream[GetBillingDataProfileRequest, GetBillingDataProfileResponse]{ClientStream: stream}
+	if err := x.ClientStream.SendMsg(in); err != nil {
+		return nil, err
+	}
+	if err := x.ClientStream.CloseSend(); err != nil {
+		return nil, err
+	}
+	return x, nil
+}
+
+// This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
+type DLMSProcessor_GetBillingDataProfileClient = grpc.ServerStreamingClient[GetBillingDataProfileResponse]
+
+func (c *dLMSProcessorClient) GetInstantaneousProfile(ctx context.Context, in *GetInstantaneousProfileRequest, opts ...grpc.CallOption) (grpc.ServerStreamingClient[GetInstantaneousProfileResponse], error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	stream, err := c.cc.NewStream(ctx, &DLMSProcessor_ServiceDesc.Streams[4], DLMSProcessor_GetInstantaneousProfile_FullMethodName, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	x := &grpc.GenericClientStream[GetInstantaneousProfileRequest, GetInstantaneousProfileResponse]{ClientStream: stream}
+	if err := x.ClientStream.SendMsg(in); err != nil {
+		return nil, err
+	}
+	if err := x.ClientStream.CloseSend(); err != nil {
+		return nil, err
+	}
+	return x, nil
+}
+
+// This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
+type DLMSProcessor_GetInstantaneousProfileClient = grpc.ServerStreamingClient[GetInstantaneousProfileResponse]
+
 // DLMSProcessorServer is the server API for DLMSProcessor service.
 // All implementations must embed UnimplementedDLMSProcessorServer
 // for forward compatibility.
 type DLMSProcessorServer interface {
 	GetOBIS(*GetOBISRequest, grpc.ServerStreamingServer[GetOBISResponse]) error
 	GetBlockLoadProfile(*GetBlockLoadProfileRequest, grpc.ServerStreamingServer[GetBlockLoadProfileResponse]) error
+	GetDailyLoadProfile(*GetDailyLoadProfileRequest, grpc.ServerStreamingServer[GetDailyLoadProfileResponse]) error
+	GetBillingDataProfile(*GetBillingDataProfileRequest, grpc.ServerStreamingServer[GetBillingDataProfileResponse]) error
+	GetInstantaneousProfile(*GetInstantaneousProfileRequest, grpc.ServerStreamingServer[GetInstantaneousProfileResponse]) error
 	mustEmbedUnimplementedDLMSProcessorServer()
 }
 
@@ -98,6 +164,15 @@ func (UnimplementedDLMSProcessorServer) GetOBIS(*GetOBISRequest, grpc.ServerStre
 }
 func (UnimplementedDLMSProcessorServer) GetBlockLoadProfile(*GetBlockLoadProfileRequest, grpc.ServerStreamingServer[GetBlockLoadProfileResponse]) error {
 	return status.Errorf(codes.Unimplemented, "method GetBlockLoadProfile not implemented")
+}
+func (UnimplementedDLMSProcessorServer) GetDailyLoadProfile(*GetDailyLoadProfileRequest, grpc.ServerStreamingServer[GetDailyLoadProfileResponse]) error {
+	return status.Errorf(codes.Unimplemented, "method GetDailyLoadProfile not implemented")
+}
+func (UnimplementedDLMSProcessorServer) GetBillingDataProfile(*GetBillingDataProfileRequest, grpc.ServerStreamingServer[GetBillingDataProfileResponse]) error {
+	return status.Errorf(codes.Unimplemented, "method GetBillingDataProfile not implemented")
+}
+func (UnimplementedDLMSProcessorServer) GetInstantaneousProfile(*GetInstantaneousProfileRequest, grpc.ServerStreamingServer[GetInstantaneousProfileResponse]) error {
+	return status.Errorf(codes.Unimplemented, "method GetInstantaneousProfile not implemented")
 }
 func (UnimplementedDLMSProcessorServer) mustEmbedUnimplementedDLMSProcessorServer() {}
 func (UnimplementedDLMSProcessorServer) testEmbeddedByValue()                       {}
@@ -142,6 +217,39 @@ func _DLMSProcessor_GetBlockLoadProfile_Handler(srv interface{}, stream grpc.Ser
 // This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
 type DLMSProcessor_GetBlockLoadProfileServer = grpc.ServerStreamingServer[GetBlockLoadProfileResponse]
 
+func _DLMSProcessor_GetDailyLoadProfile_Handler(srv interface{}, stream grpc.ServerStream) error {
+	m := new(GetDailyLoadProfileRequest)
+	if err := stream.RecvMsg(m); err != nil {
+		return err
+	}
+	return srv.(DLMSProcessorServer).GetDailyLoadProfile(m, &grpc.GenericServerStream[GetDailyLoadProfileRequest, GetDailyLoadProfileResponse]{ServerStream: stream})
+}
+
+// This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
+type DLMSProcessor_GetDailyLoadProfileServer = grpc.ServerStreamingServer[GetDailyLoadProfileResponse]
+
+func _DLMSProcessor_GetBillingDataProfile_Handler(srv interface{}, stream grpc.ServerStream) error {
+	m := new(GetBillingDataProfileRequest)
+	if err := stream.RecvMsg(m); err != nil {
+		return err
+	}
+	return srv.(DLMSProcessorServer).GetBillingDataProfile(m, &grpc.GenericServerStream[GetBillingDataProfileRequest, GetBillingDataProfileResponse]{ServerStream: stream})
+}
+
+// This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
+type DLMSProcessor_GetBillingDataProfileServer = grpc.ServerStreamingServer[GetBillingDataProfileResponse]
+
+func _DLMSProcessor_GetInstantaneousProfile_Handler(srv interface{}, stream grpc.ServerStream) error {
+	m := new(GetInstantaneousProfileRequest)
+	if err := stream.RecvMsg(m); err != nil {
+		return err
+	}
+	return srv.(DLMSProcessorServer).GetInstantaneousProfile(m, &grpc.GenericServerStream[GetInstantaneousProfileRequest, GetInstantaneousProfileResponse]{ServerStream: stream})
+}
+
+// This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
+type DLMSProcessor_GetInstantaneousProfileServer = grpc.ServerStreamingServer[GetInstantaneousProfileResponse]
+
 // DLMSProcessor_ServiceDesc is the grpc.ServiceDesc for DLMSProcessor service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -158,6 +266,21 @@ var DLMSProcessor_ServiceDesc = grpc.ServiceDesc{
 		{
 			StreamName:    "GetBlockLoadProfile",
 			Handler:       _DLMSProcessor_GetBlockLoadProfile_Handler,
+			ServerStreams: true,
+		},
+		{
+			StreamName:    "GetDailyLoadProfile",
+			Handler:       _DLMSProcessor_GetDailyLoadProfile_Handler,
+			ServerStreams: true,
+		},
+		{
+			StreamName:    "GetBillingDataProfile",
+			Handler:       _DLMSProcessor_GetBillingDataProfile_Handler,
+			ServerStreams: true,
+		},
+		{
+			StreamName:    "GetInstantaneousProfile",
+			Handler:       _DLMSProcessor_GetInstantaneousProfile_Handler,
 			ServerStreams: true,
 		},
 	},
