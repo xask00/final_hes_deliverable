@@ -64,6 +64,7 @@ func (m *RealMeter) GetOBIS(obis string) (string, error) {
 	}
 
 	err := m.client.Connect()
+	defer m.client.Close()
 	if err != nil {
 		return "", fmt.Errorf("failed to connect to meter: %w", err)
 	}
@@ -78,6 +79,7 @@ func (m *RealMeter) GetBlockLoadProfile() (*BlockLoadProfile, error) {
 	}
 
 	err := m.client.Connect()
+	defer m.client.Close()
 	if err != nil {
 		return nil, fmt.Errorf("failed to connect to meter: %w", err)
 	}
@@ -92,6 +94,84 @@ func (m *RealMeter) GetBlockLoadProfile() (*BlockLoadProfile, error) {
 	}
 
 	slog.Info("block load profile results", "results", results[0])
+
+	return &results[0], nil
+}
+
+func (m *RealMeter) GetDailyLoadProfile() (*DailyLoadProfile, error) {
+	if m.client == nil {
+		slog.Error("client not initialized")
+		return nil, fmt.Errorf("client not initialized")
+	}
+
+	err := m.client.Connect()
+	defer m.client.Close()
+	if err != nil {
+		return nil, fmt.Errorf("failed to connect to meter: %w", err)
+	}
+
+	results, err := ReadProfileDataTyped[DailyLoadProfile](m.client, "1.0.99.2.0.255", 1, 1)
+	if err != nil {
+		return nil, fmt.Errorf("failed to read daily load profile data: %w", err)
+	}
+
+	if len(results) == 0 {
+		return nil, fmt.Errorf("no daily load profile data found")
+	}
+
+	slog.Info("daily load profile results", "results", results[0])
+
+	return &results[0], nil
+}
+
+func (m *RealMeter) GetBillingDataProfile() (*BillingDataProfile, error) {
+	if m.client == nil {
+		slog.Error("client not initialized")
+		return nil, fmt.Errorf("client not initialized")
+	}
+
+	err := m.client.Connect()
+	defer m.client.Close()
+	if err != nil {
+		return nil, fmt.Errorf("failed to connect to meter: %w", err)
+	}
+
+	results, err := ReadProfileDataTyped[BillingDataProfile](m.client, "0.0.98.1.0.255", 1, 1)
+	if err != nil {
+		return nil, fmt.Errorf("failed to read billing data profile: %w", err)
+	}
+
+	if len(results) == 0 {
+		return nil, fmt.Errorf("no billing data profile found")
+	}
+
+	slog.Info("billing data profile results", "results", results[0])
+
+	return &results[0], nil
+}
+
+func (m *RealMeter) GetInstantaneousProfile() (*InstantaneousProfile, error) {
+	if m.client == nil {
+		slog.Error("client not initialized")
+		return nil, fmt.Errorf("client not initialized")
+	}
+
+	err := m.client.Connect()
+	defer m.client.Close()
+	if err != nil {
+		return nil, fmt.Errorf("failed to connect to meter: %w", err)
+	}
+
+	results, err := ReadProfileDataTyped[InstantaneousProfile](m.client, "1.0.94.7.0.255", 1, 1)
+	if err != nil {
+		return nil, fmt.Errorf("failed to read instantaneous profile: %w", err)
+	}
+
+	if len(results) == 0 {
+		return nil, fmt.Errorf("no instantaneous profile data found")
+	}
+
+	slog.Info("instantaneous profile results", "results", results[0])
 
 	return &results[0], nil
 }
