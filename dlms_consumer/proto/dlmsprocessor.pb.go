@@ -469,6 +469,741 @@ func (x *BlockLoadProfile) GetMeterHealthIndicator() uint32 {
 	return 0
 }
 
+// Daily Load Profile Messages
+type GetDailyLoadProfileRequest struct {
+	state             protoimpl.MessageState `protogen:"open.v1"`
+	Meter             []*Meter               `protobuf:"bytes,1,rep,name=meter,proto3" json:"meter,omitempty"`
+	Retries           int32                  `protobuf:"varint,2,opt,name=retries,proto3" json:"retries,omitempty"`
+	RetryDelay        int32                  `protobuf:"varint,3,opt,name=retryDelay,proto3" json:"retryDelay,omitempty"`
+	ConnectionTimeout int32                  `protobuf:"varint,4,opt,name=connectionTimeout,proto3" json:"connectionTimeout,omitempty"`
+	unknownFields     protoimpl.UnknownFields
+	sizeCache         protoimpl.SizeCache
+}
+
+func (x *GetDailyLoadProfileRequest) Reset() {
+	*x = GetDailyLoadProfileRequest{}
+	mi := &file_dlmsprocessor_proto_msgTypes[6]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetDailyLoadProfileRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetDailyLoadProfileRequest) ProtoMessage() {}
+
+func (x *GetDailyLoadProfileRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_dlmsprocessor_proto_msgTypes[6]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetDailyLoadProfileRequest.ProtoReflect.Descriptor instead.
+func (*GetDailyLoadProfileRequest) Descriptor() ([]byte, []int) {
+	return file_dlmsprocessor_proto_rawDescGZIP(), []int{6}
+}
+
+func (x *GetDailyLoadProfileRequest) GetMeter() []*Meter {
+	if x != nil {
+		return x.Meter
+	}
+	return nil
+}
+
+func (x *GetDailyLoadProfileRequest) GetRetries() int32 {
+	if x != nil {
+		return x.Retries
+	}
+	return 0
+}
+
+func (x *GetDailyLoadProfileRequest) GetRetryDelay() int32 {
+	if x != nil {
+		return x.RetryDelay
+	}
+	return 0
+}
+
+func (x *GetDailyLoadProfileRequest) GetConnectionTimeout() int32 {
+	if x != nil {
+		return x.ConnectionTimeout
+	}
+	return 0
+}
+
+type GetDailyLoadProfileResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Profile       *DailyLoadProfile      `protobuf:"bytes,1,opt,name=profile,proto3" json:"profile,omitempty"`
+	MeterIp       string                 `protobuf:"bytes,2,opt,name=meterIp,proto3" json:"meterIp,omitempty"` // To identify which meter the profile came from
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetDailyLoadProfileResponse) Reset() {
+	*x = GetDailyLoadProfileResponse{}
+	mi := &file_dlmsprocessor_proto_msgTypes[7]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetDailyLoadProfileResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetDailyLoadProfileResponse) ProtoMessage() {}
+
+func (x *GetDailyLoadProfileResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_dlmsprocessor_proto_msgTypes[7]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetDailyLoadProfileResponse.ProtoReflect.Descriptor instead.
+func (*GetDailyLoadProfileResponse) Descriptor() ([]byte, []int) {
+	return file_dlmsprocessor_proto_rawDescGZIP(), []int{7}
+}
+
+func (x *GetDailyLoadProfileResponse) GetProfile() *DailyLoadProfile {
+	if x != nil {
+		return x.Profile
+	}
+	return nil
+}
+
+func (x *GetDailyLoadProfileResponse) GetMeterIp() string {
+	if x != nil {
+		return x.MeterIp
+	}
+	return ""
+}
+
+type DailyLoadProfile struct {
+	state                     protoimpl.MessageState `protogen:"open.v1"`
+	DateTime                  string                 `protobuf:"bytes,1,opt,name=dateTime,proto3" json:"dateTime,omitempty"`                                     // RTC - Date & Time (OBIS: 0.0.1.0.0.255)
+	CumulativeEnergyWhExport  float64                `protobuf:"fixed64,2,opt,name=cumulativeEnergyWhExport,proto3" json:"cumulativeEnergyWhExport,omitempty"`   // Cumulative Energy Wh-export (OBIS: 1.0.2.8.0.255)
+	CumulativeEnergyVahExport float64                `protobuf:"fixed64,3,opt,name=cumulativeEnergyVahExport,proto3" json:"cumulativeEnergyVahExport,omitempty"` // Cumulative Energy VAh-export (OBIS: 1.0.10.8.0.255)
+	CumulativeEnergyWhImport  float64                `protobuf:"fixed64,4,opt,name=cumulativeEnergyWhImport,proto3" json:"cumulativeEnergyWhImport,omitempty"`   // Cumulative Energy Wh-(import) (OBIS: 1.0.1.8.0.255)
+	CumulativeEnergyVahImport float64                `protobuf:"fixed64,5,opt,name=cumulativeEnergyVahImport,proto3" json:"cumulativeEnergyVahImport,omitempty"` // Cumulative Energy VAh-(import) (OBIS: 1.0.9.8.0.255)
+	unknownFields             protoimpl.UnknownFields
+	sizeCache                 protoimpl.SizeCache
+}
+
+func (x *DailyLoadProfile) Reset() {
+	*x = DailyLoadProfile{}
+	mi := &file_dlmsprocessor_proto_msgTypes[8]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *DailyLoadProfile) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*DailyLoadProfile) ProtoMessage() {}
+
+func (x *DailyLoadProfile) ProtoReflect() protoreflect.Message {
+	mi := &file_dlmsprocessor_proto_msgTypes[8]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use DailyLoadProfile.ProtoReflect.Descriptor instead.
+func (*DailyLoadProfile) Descriptor() ([]byte, []int) {
+	return file_dlmsprocessor_proto_rawDescGZIP(), []int{8}
+}
+
+func (x *DailyLoadProfile) GetDateTime() string {
+	if x != nil {
+		return x.DateTime
+	}
+	return ""
+}
+
+func (x *DailyLoadProfile) GetCumulativeEnergyWhExport() float64 {
+	if x != nil {
+		return x.CumulativeEnergyWhExport
+	}
+	return 0
+}
+
+func (x *DailyLoadProfile) GetCumulativeEnergyVahExport() float64 {
+	if x != nil {
+		return x.CumulativeEnergyVahExport
+	}
+	return 0
+}
+
+func (x *DailyLoadProfile) GetCumulativeEnergyWhImport() float64 {
+	if x != nil {
+		return x.CumulativeEnergyWhImport
+	}
+	return 0
+}
+
+func (x *DailyLoadProfile) GetCumulativeEnergyVahImport() float64 {
+	if x != nil {
+		return x.CumulativeEnergyVahImport
+	}
+	return 0
+}
+
+// Billing Data Profile Messages
+type GetBillingDataProfileRequest struct {
+	state             protoimpl.MessageState `protogen:"open.v1"`
+	Meter             []*Meter               `protobuf:"bytes,1,rep,name=meter,proto3" json:"meter,omitempty"`
+	Retries           int32                  `protobuf:"varint,2,opt,name=retries,proto3" json:"retries,omitempty"`
+	RetryDelay        int32                  `protobuf:"varint,3,opt,name=retryDelay,proto3" json:"retryDelay,omitempty"`
+	ConnectionTimeout int32                  `protobuf:"varint,4,opt,name=connectionTimeout,proto3" json:"connectionTimeout,omitempty"`
+	unknownFields     protoimpl.UnknownFields
+	sizeCache         protoimpl.SizeCache
+}
+
+func (x *GetBillingDataProfileRequest) Reset() {
+	*x = GetBillingDataProfileRequest{}
+	mi := &file_dlmsprocessor_proto_msgTypes[9]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetBillingDataProfileRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetBillingDataProfileRequest) ProtoMessage() {}
+
+func (x *GetBillingDataProfileRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_dlmsprocessor_proto_msgTypes[9]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetBillingDataProfileRequest.ProtoReflect.Descriptor instead.
+func (*GetBillingDataProfileRequest) Descriptor() ([]byte, []int) {
+	return file_dlmsprocessor_proto_rawDescGZIP(), []int{9}
+}
+
+func (x *GetBillingDataProfileRequest) GetMeter() []*Meter {
+	if x != nil {
+		return x.Meter
+	}
+	return nil
+}
+
+func (x *GetBillingDataProfileRequest) GetRetries() int32 {
+	if x != nil {
+		return x.Retries
+	}
+	return 0
+}
+
+func (x *GetBillingDataProfileRequest) GetRetryDelay() int32 {
+	if x != nil {
+		return x.RetryDelay
+	}
+	return 0
+}
+
+func (x *GetBillingDataProfileRequest) GetConnectionTimeout() int32 {
+	if x != nil {
+		return x.ConnectionTimeout
+	}
+	return 0
+}
+
+type GetBillingDataProfileResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Profile       *BillingDataProfile    `protobuf:"bytes,1,opt,name=profile,proto3" json:"profile,omitempty"`
+	MeterIp       string                 `protobuf:"bytes,2,opt,name=meterIp,proto3" json:"meterIp,omitempty"` // To identify which meter the profile came from
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetBillingDataProfileResponse) Reset() {
+	*x = GetBillingDataProfileResponse{}
+	mi := &file_dlmsprocessor_proto_msgTypes[10]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetBillingDataProfileResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetBillingDataProfileResponse) ProtoMessage() {}
+
+func (x *GetBillingDataProfileResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_dlmsprocessor_proto_msgTypes[10]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetBillingDataProfileResponse.ProtoReflect.Descriptor instead.
+func (*GetBillingDataProfileResponse) Descriptor() ([]byte, []int) {
+	return file_dlmsprocessor_proto_rawDescGZIP(), []int{10}
+}
+
+func (x *GetBillingDataProfileResponse) GetProfile() *BillingDataProfile {
+	if x != nil {
+		return x.Profile
+	}
+	return nil
+}
+
+func (x *GetBillingDataProfileResponse) GetMeterIp() string {
+	if x != nil {
+		return x.MeterIp
+	}
+	return ""
+}
+
+type BillingDataProfile struct {
+	state                     protoimpl.MessageState `protogen:"open.v1"`
+	BillingDate               string                 `protobuf:"bytes,1,opt,name=billingDate,proto3" json:"billingDate,omitempty"`                               // Billing Date (OBIS: 0.0.0.1.2.255)
+	AveragePfForBillingPeriod float64                `protobuf:"fixed64,2,opt,name=averagePfForBillingPeriod,proto3" json:"averagePfForBillingPeriod,omitempty"` // Average PF for Billing Period (OBIS: 1.0.13.0.0.255)
+	CumEnergyWhImport         float64                `protobuf:"fixed64,3,opt,name=cumEnergyWhImport,proto3" json:"cumEnergyWhImport,omitempty"`                 // Cumulative Energy - Wh(Import) (OBIS: 1.0.1.8.0.255)
+	CumEnergyWhTz1            float64                `protobuf:"fixed64,4,opt,name=cumEnergyWhTz1,proto3" json:"cumEnergyWhTz1,omitempty"`                       // Cumulative Energy - Wh - TZ1 (OBIS: 1.0.1.8.1.255)
+	CumEnergyWhTz2            float64                `protobuf:"fixed64,5,opt,name=cumEnergyWhTz2,proto3" json:"cumEnergyWhTz2,omitempty"`                       // Cumulative Energy - Wh - TZ2 (OBIS: 1.0.1.8.2.255)
+	CumEnergyWhTz3            float64                `protobuf:"fixed64,6,opt,name=cumEnergyWhTz3,proto3" json:"cumEnergyWhTz3,omitempty"`                       // Cumulative Energy - Wh - TZ3 (OBIS: 1.0.1.8.3.255)
+	CumEnergyWhTz4            float64                `protobuf:"fixed64,7,opt,name=cumEnergyWhTz4,proto3" json:"cumEnergyWhTz4,omitempty"`                       // Cumulative Energy - Wh - TZ4 (OBIS: 1.0.1.8.4.255)
+	CumEnergyVahImport        float64                `protobuf:"fixed64,8,opt,name=cumEnergyVahImport,proto3" json:"cumEnergyVahImport,omitempty"`               // Cumulative Energy - VAh(Import) (OBIS: 1.0.9.8.0.255)
+	CumEnergyVahTz1           float64                `protobuf:"fixed64,9,opt,name=cumEnergyVahTz1,proto3" json:"cumEnergyVahTz1,omitempty"`                     // Cumulative Energy - VAh - TZ1 (OBIS: 1.0.9.8.1.255)
+	CumEnergyVahTz2           float64                `protobuf:"fixed64,10,opt,name=cumEnergyVahTz2,proto3" json:"cumEnergyVahTz2,omitempty"`                    // Cumulative Energy - VAh - TZ2 (OBIS: 1.0.9.8.2.255)
+	CumEnergyVahTz3           float64                `protobuf:"fixed64,11,opt,name=cumEnergyVahTz3,proto3" json:"cumEnergyVahTz3,omitempty"`                    // Cumulative Energy - VAh - TZ3 (OBIS: 1.0.9.8.3.255)
+	CumEnergyVahTz4           float64                `protobuf:"fixed64,12,opt,name=cumEnergyVahTz4,proto3" json:"cumEnergyVahTz4,omitempty"`                    // Cumulative Energy - VAh - TZ4 (OBIS: 1.0.9.8.4.255)
+	Mdw                       float64                `protobuf:"fixed64,13,opt,name=mdw,proto3" json:"mdw,omitempty"`                                            // MD W (OBIS: 1.0.1.6.0.255)
+	MdwDateTime               string                 `protobuf:"bytes,14,opt,name=mdwDateTime,proto3" json:"mdwDateTime,omitempty"`                              // MD W - Date & Time (OBIS: 1.0.1.6.0.255)
+	Mdva                      float64                `protobuf:"fixed64,15,opt,name=mdva,proto3" json:"mdva,omitempty"`                                          // MD VA (OBIS: 1.0.9.6.0.255)
+	MdvaDateTime              string                 `protobuf:"bytes,16,opt,name=mdvaDateTime,proto3" json:"mdvaDateTime,omitempty"`                            // MD VA - Date & Time (OBIS: 1.0.9.6.0.255)
+	BillingPowerOnDuration    float64                `protobuf:"fixed64,17,opt,name=billingPowerOnDuration,proto3" json:"billingPowerOnDuration,omitempty"`      // Billing Power On Duration (OBIS: 0.0.94.91.13.255)
+	CumEnergyWh               float64                `protobuf:"fixed64,18,opt,name=cumEnergyWh,proto3" json:"cumEnergyWh,omitempty"`                            // Cumulative Energy Wh (OBIS: 1.0.2.8.0.255)
+	CumEnergyVah              float64                `protobuf:"fixed64,19,opt,name=cumEnergyVah,proto3" json:"cumEnergyVah,omitempty"`                          // Cumulative Energy VAh (OBIS: 1.0.10.8.0.255)
+	unknownFields             protoimpl.UnknownFields
+	sizeCache                 protoimpl.SizeCache
+}
+
+func (x *BillingDataProfile) Reset() {
+	*x = BillingDataProfile{}
+	mi := &file_dlmsprocessor_proto_msgTypes[11]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *BillingDataProfile) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*BillingDataProfile) ProtoMessage() {}
+
+func (x *BillingDataProfile) ProtoReflect() protoreflect.Message {
+	mi := &file_dlmsprocessor_proto_msgTypes[11]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use BillingDataProfile.ProtoReflect.Descriptor instead.
+func (*BillingDataProfile) Descriptor() ([]byte, []int) {
+	return file_dlmsprocessor_proto_rawDescGZIP(), []int{11}
+}
+
+func (x *BillingDataProfile) GetBillingDate() string {
+	if x != nil {
+		return x.BillingDate
+	}
+	return ""
+}
+
+func (x *BillingDataProfile) GetAveragePfForBillingPeriod() float64 {
+	if x != nil {
+		return x.AveragePfForBillingPeriod
+	}
+	return 0
+}
+
+func (x *BillingDataProfile) GetCumEnergyWhImport() float64 {
+	if x != nil {
+		return x.CumEnergyWhImport
+	}
+	return 0
+}
+
+func (x *BillingDataProfile) GetCumEnergyWhTz1() float64 {
+	if x != nil {
+		return x.CumEnergyWhTz1
+	}
+	return 0
+}
+
+func (x *BillingDataProfile) GetCumEnergyWhTz2() float64 {
+	if x != nil {
+		return x.CumEnergyWhTz2
+	}
+	return 0
+}
+
+func (x *BillingDataProfile) GetCumEnergyWhTz3() float64 {
+	if x != nil {
+		return x.CumEnergyWhTz3
+	}
+	return 0
+}
+
+func (x *BillingDataProfile) GetCumEnergyWhTz4() float64 {
+	if x != nil {
+		return x.CumEnergyWhTz4
+	}
+	return 0
+}
+
+func (x *BillingDataProfile) GetCumEnergyVahImport() float64 {
+	if x != nil {
+		return x.CumEnergyVahImport
+	}
+	return 0
+}
+
+func (x *BillingDataProfile) GetCumEnergyVahTz1() float64 {
+	if x != nil {
+		return x.CumEnergyVahTz1
+	}
+	return 0
+}
+
+func (x *BillingDataProfile) GetCumEnergyVahTz2() float64 {
+	if x != nil {
+		return x.CumEnergyVahTz2
+	}
+	return 0
+}
+
+func (x *BillingDataProfile) GetCumEnergyVahTz3() float64 {
+	if x != nil {
+		return x.CumEnergyVahTz3
+	}
+	return 0
+}
+
+func (x *BillingDataProfile) GetCumEnergyVahTz4() float64 {
+	if x != nil {
+		return x.CumEnergyVahTz4
+	}
+	return 0
+}
+
+func (x *BillingDataProfile) GetMdw() float64 {
+	if x != nil {
+		return x.Mdw
+	}
+	return 0
+}
+
+func (x *BillingDataProfile) GetMdwDateTime() string {
+	if x != nil {
+		return x.MdwDateTime
+	}
+	return ""
+}
+
+func (x *BillingDataProfile) GetMdva() float64 {
+	if x != nil {
+		return x.Mdva
+	}
+	return 0
+}
+
+func (x *BillingDataProfile) GetMdvaDateTime() string {
+	if x != nil {
+		return x.MdvaDateTime
+	}
+	return ""
+}
+
+func (x *BillingDataProfile) GetBillingPowerOnDuration() float64 {
+	if x != nil {
+		return x.BillingPowerOnDuration
+	}
+	return 0
+}
+
+func (x *BillingDataProfile) GetCumEnergyWh() float64 {
+	if x != nil {
+		return x.CumEnergyWh
+	}
+	return 0
+}
+
+func (x *BillingDataProfile) GetCumEnergyVah() float64 {
+	if x != nil {
+		return x.CumEnergyVah
+	}
+	return 0
+}
+
+// Instantaneous Profile Messages
+type GetInstantaneousProfileRequest struct {
+	state             protoimpl.MessageState `protogen:"open.v1"`
+	Meter             []*Meter               `protobuf:"bytes,1,rep,name=meter,proto3" json:"meter,omitempty"`
+	Retries           int32                  `protobuf:"varint,2,opt,name=retries,proto3" json:"retries,omitempty"`
+	RetryDelay        int32                  `protobuf:"varint,3,opt,name=retryDelay,proto3" json:"retryDelay,omitempty"`
+	ConnectionTimeout int32                  `protobuf:"varint,4,opt,name=connectionTimeout,proto3" json:"connectionTimeout,omitempty"`
+	unknownFields     protoimpl.UnknownFields
+	sizeCache         protoimpl.SizeCache
+}
+
+func (x *GetInstantaneousProfileRequest) Reset() {
+	*x = GetInstantaneousProfileRequest{}
+	mi := &file_dlmsprocessor_proto_msgTypes[12]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetInstantaneousProfileRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetInstantaneousProfileRequest) ProtoMessage() {}
+
+func (x *GetInstantaneousProfileRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_dlmsprocessor_proto_msgTypes[12]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetInstantaneousProfileRequest.ProtoReflect.Descriptor instead.
+func (*GetInstantaneousProfileRequest) Descriptor() ([]byte, []int) {
+	return file_dlmsprocessor_proto_rawDescGZIP(), []int{12}
+}
+
+func (x *GetInstantaneousProfileRequest) GetMeter() []*Meter {
+	if x != nil {
+		return x.Meter
+	}
+	return nil
+}
+
+func (x *GetInstantaneousProfileRequest) GetRetries() int32 {
+	if x != nil {
+		return x.Retries
+	}
+	return 0
+}
+
+func (x *GetInstantaneousProfileRequest) GetRetryDelay() int32 {
+	if x != nil {
+		return x.RetryDelay
+	}
+	return 0
+}
+
+func (x *GetInstantaneousProfileRequest) GetConnectionTimeout() int32 {
+	if x != nil {
+		return x.ConnectionTimeout
+	}
+	return 0
+}
+
+type GetInstantaneousProfileResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Profile       *InstantaneousProfile  `protobuf:"bytes,1,opt,name=profile,proto3" json:"profile,omitempty"`
+	MeterIp       string                 `protobuf:"bytes,2,opt,name=meterIp,proto3" json:"meterIp,omitempty"` // To identify which meter the profile came from
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetInstantaneousProfileResponse) Reset() {
+	*x = GetInstantaneousProfileResponse{}
+	mi := &file_dlmsprocessor_proto_msgTypes[13]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetInstantaneousProfileResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetInstantaneousProfileResponse) ProtoMessage() {}
+
+func (x *GetInstantaneousProfileResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_dlmsprocessor_proto_msgTypes[13]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetInstantaneousProfileResponse.ProtoReflect.Descriptor instead.
+func (*GetInstantaneousProfileResponse) Descriptor() ([]byte, []int) {
+	return file_dlmsprocessor_proto_rawDescGZIP(), []int{13}
+}
+
+func (x *GetInstantaneousProfileResponse) GetProfile() *InstantaneousProfile {
+	if x != nil {
+		return x.Profile
+	}
+	return nil
+}
+
+func (x *GetInstantaneousProfileResponse) GetMeterIp() string {
+	if x != nil {
+		return x.MeterIp
+	}
+	return ""
+}
+
+type InstantaneousProfile struct {
+	state             protoimpl.MessageState `protogen:"open.v1"`
+	DateTime          string                 `protobuf:"bytes,1,opt,name=dateTime,proto3" json:"dateTime,omitempty"`                     // RTC - Date & Time (OBIS: 0.0.1.0.0.255)
+	Voltage           float64                `protobuf:"fixed64,2,opt,name=voltage,proto3" json:"voltage,omitempty"`                     // Voltage (instantaneous) (OBIS: 1.0.12.7.0.255)
+	PhaseCurrent      float64                `protobuf:"fixed64,3,opt,name=phaseCurrent,proto3" json:"phaseCurrent,omitempty"`           // Phase Current (instantaneous) (OBIS: 1.0.11.7.0.255)
+	NeutralCurrent    float64                `protobuf:"fixed64,4,opt,name=neutralCurrent,proto3" json:"neutralCurrent,omitempty"`       // Neutral Current (instantaneous) (OBIS: 1.0.91.7.0.255)
+	SignedPowerFactor float64                `protobuf:"fixed64,5,opt,name=signedPowerFactor,proto3" json:"signedPowerFactor,omitempty"` // Signed Power Factor (instantaneous) (OBIS: 1.0.13.7.0.255)
+	Frequency         float64                `protobuf:"fixed64,6,opt,name=frequency,proto3" json:"frequency,omitempty"`                 // Frequency (instantaneous) (OBIS: 1.0.14.7.0.255)
+	ApparentPower     float64                `protobuf:"fixed64,7,opt,name=apparentPower,proto3" json:"apparentPower,omitempty"`         // Apparent Power - VA (instantaneous) (OBIS: 1.0.9.7.0.255)
+	ActivePower       float64                `protobuf:"fixed64,8,opt,name=activePower,proto3" json:"activePower,omitempty"`             // Active Power - W (instantaneous) (OBIS: 1.0.1.7.0.255)
+	CumEnergyWh       float64                `protobuf:"fixed64,9,opt,name=cumEnergyWh,proto3" json:"cumEnergyWh,omitempty"`             // Cumulative Energy - Wh (OBIS: 1.0.1.8.0.255)
+	unknownFields     protoimpl.UnknownFields
+	sizeCache         protoimpl.SizeCache
+}
+
+func (x *InstantaneousProfile) Reset() {
+	*x = InstantaneousProfile{}
+	mi := &file_dlmsprocessor_proto_msgTypes[14]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *InstantaneousProfile) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*InstantaneousProfile) ProtoMessage() {}
+
+func (x *InstantaneousProfile) ProtoReflect() protoreflect.Message {
+	mi := &file_dlmsprocessor_proto_msgTypes[14]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use InstantaneousProfile.ProtoReflect.Descriptor instead.
+func (*InstantaneousProfile) Descriptor() ([]byte, []int) {
+	return file_dlmsprocessor_proto_rawDescGZIP(), []int{14}
+}
+
+func (x *InstantaneousProfile) GetDateTime() string {
+	if x != nil {
+		return x.DateTime
+	}
+	return ""
+}
+
+func (x *InstantaneousProfile) GetVoltage() float64 {
+	if x != nil {
+		return x.Voltage
+	}
+	return 0
+}
+
+func (x *InstantaneousProfile) GetPhaseCurrent() float64 {
+	if x != nil {
+		return x.PhaseCurrent
+	}
+	return 0
+}
+
+func (x *InstantaneousProfile) GetNeutralCurrent() float64 {
+	if x != nil {
+		return x.NeutralCurrent
+	}
+	return 0
+}
+
+func (x *InstantaneousProfile) GetSignedPowerFactor() float64 {
+	if x != nil {
+		return x.SignedPowerFactor
+	}
+	return 0
+}
+
+func (x *InstantaneousProfile) GetFrequency() float64 {
+	if x != nil {
+		return x.Frequency
+	}
+	return 0
+}
+
+func (x *InstantaneousProfile) GetApparentPower() float64 {
+	if x != nil {
+		return x.ApparentPower
+	}
+	return 0
+}
+
+func (x *InstantaneousProfile) GetActivePower() float64 {
+	if x != nil {
+		return x.ActivePower
+	}
+	return 0
+}
+
+func (x *InstantaneousProfile) GetCumEnergyWh() float64 {
+	if x != nil {
+		return x.CumEnergyWh
+	}
+	return 0
+}
+
 var File_dlmsprocessor_proto protoreflect.FileDescriptor
 
 const file_dlmsprocessor_proto_rawDesc = "" +
@@ -512,10 +1247,80 @@ const file_dlmsprocessor_proto_rawDesc = "" +
 	"\x13blockEnergyWhExport\x18\x05 \x01(\x01R\x13blockEnergyWhExport\x122\n" +
 	"\x14blockEnergyVahExport\x18\x06 \x01(\x01R\x14blockEnergyVahExport\x12&\n" +
 	"\x0eaverageCurrent\x18\a \x01(\x01R\x0eaverageCurrent\x122\n" +
-	"\x14meterHealthIndicator\x18\b \x01(\rR\x14meterHealthIndicator2\xcb\x01\n" +
+	"\x14meterHealthIndicator\x18\b \x01(\rR\x14meterHealthIndicator\"\xb0\x01\n" +
+	"\x1aGetDailyLoadProfileRequest\x12*\n" +
+	"\x05meter\x18\x01 \x03(\v2\x14.dlmsprocessor.MeterR\x05meter\x12\x18\n" +
+	"\aretries\x18\x02 \x01(\x05R\aretries\x12\x1e\n" +
+	"\n" +
+	"retryDelay\x18\x03 \x01(\x05R\n" +
+	"retryDelay\x12,\n" +
+	"\x11connectionTimeout\x18\x04 \x01(\x05R\x11connectionTimeout\"r\n" +
+	"\x1bGetDailyLoadProfileResponse\x129\n" +
+	"\aprofile\x18\x01 \x01(\v2\x1f.dlmsprocessor.DailyLoadProfileR\aprofile\x12\x18\n" +
+	"\ameterIp\x18\x02 \x01(\tR\ameterIp\"\xa2\x02\n" +
+	"\x10DailyLoadProfile\x12\x1a\n" +
+	"\bdateTime\x18\x01 \x01(\tR\bdateTime\x12:\n" +
+	"\x18cumulativeEnergyWhExport\x18\x02 \x01(\x01R\x18cumulativeEnergyWhExport\x12<\n" +
+	"\x19cumulativeEnergyVahExport\x18\x03 \x01(\x01R\x19cumulativeEnergyVahExport\x12:\n" +
+	"\x18cumulativeEnergyWhImport\x18\x04 \x01(\x01R\x18cumulativeEnergyWhImport\x12<\n" +
+	"\x19cumulativeEnergyVahImport\x18\x05 \x01(\x01R\x19cumulativeEnergyVahImport\"\xb2\x01\n" +
+	"\x1cGetBillingDataProfileRequest\x12*\n" +
+	"\x05meter\x18\x01 \x03(\v2\x14.dlmsprocessor.MeterR\x05meter\x12\x18\n" +
+	"\aretries\x18\x02 \x01(\x05R\aretries\x12\x1e\n" +
+	"\n" +
+	"retryDelay\x18\x03 \x01(\x05R\n" +
+	"retryDelay\x12,\n" +
+	"\x11connectionTimeout\x18\x04 \x01(\x05R\x11connectionTimeout\"v\n" +
+	"\x1dGetBillingDataProfileResponse\x12;\n" +
+	"\aprofile\x18\x01 \x01(\v2!.dlmsprocessor.BillingDataProfileR\aprofile\x12\x18\n" +
+	"\ameterIp\x18\x02 \x01(\tR\ameterIp\"\x84\x06\n" +
+	"\x12BillingDataProfile\x12 \n" +
+	"\vbillingDate\x18\x01 \x01(\tR\vbillingDate\x12<\n" +
+	"\x19averagePfForBillingPeriod\x18\x02 \x01(\x01R\x19averagePfForBillingPeriod\x12,\n" +
+	"\x11cumEnergyWhImport\x18\x03 \x01(\x01R\x11cumEnergyWhImport\x12&\n" +
+	"\x0ecumEnergyWhTz1\x18\x04 \x01(\x01R\x0ecumEnergyWhTz1\x12&\n" +
+	"\x0ecumEnergyWhTz2\x18\x05 \x01(\x01R\x0ecumEnergyWhTz2\x12&\n" +
+	"\x0ecumEnergyWhTz3\x18\x06 \x01(\x01R\x0ecumEnergyWhTz3\x12&\n" +
+	"\x0ecumEnergyWhTz4\x18\a \x01(\x01R\x0ecumEnergyWhTz4\x12.\n" +
+	"\x12cumEnergyVahImport\x18\b \x01(\x01R\x12cumEnergyVahImport\x12(\n" +
+	"\x0fcumEnergyVahTz1\x18\t \x01(\x01R\x0fcumEnergyVahTz1\x12(\n" +
+	"\x0fcumEnergyVahTz2\x18\n" +
+	" \x01(\x01R\x0fcumEnergyVahTz2\x12(\n" +
+	"\x0fcumEnergyVahTz3\x18\v \x01(\x01R\x0fcumEnergyVahTz3\x12(\n" +
+	"\x0fcumEnergyVahTz4\x18\f \x01(\x01R\x0fcumEnergyVahTz4\x12\x10\n" +
+	"\x03mdw\x18\r \x01(\x01R\x03mdw\x12 \n" +
+	"\vmdwDateTime\x18\x0e \x01(\tR\vmdwDateTime\x12\x12\n" +
+	"\x04mdva\x18\x0f \x01(\x01R\x04mdva\x12\"\n" +
+	"\fmdvaDateTime\x18\x10 \x01(\tR\fmdvaDateTime\x126\n" +
+	"\x16billingPowerOnDuration\x18\x11 \x01(\x01R\x16billingPowerOnDuration\x12 \n" +
+	"\vcumEnergyWh\x18\x12 \x01(\x01R\vcumEnergyWh\x12\"\n" +
+	"\fcumEnergyVah\x18\x13 \x01(\x01R\fcumEnergyVah\"\xb4\x01\n" +
+	"\x1eGetInstantaneousProfileRequest\x12*\n" +
+	"\x05meter\x18\x01 \x03(\v2\x14.dlmsprocessor.MeterR\x05meter\x12\x18\n" +
+	"\aretries\x18\x02 \x01(\x05R\aretries\x12\x1e\n" +
+	"\n" +
+	"retryDelay\x18\x03 \x01(\x05R\n" +
+	"retryDelay\x12,\n" +
+	"\x11connectionTimeout\x18\x04 \x01(\x05R\x11connectionTimeout\"z\n" +
+	"\x1fGetInstantaneousProfileResponse\x12=\n" +
+	"\aprofile\x18\x01 \x01(\v2#.dlmsprocessor.InstantaneousProfileR\aprofile\x12\x18\n" +
+	"\ameterIp\x18\x02 \x01(\tR\ameterIp\"\xce\x02\n" +
+	"\x14InstantaneousProfile\x12\x1a\n" +
+	"\bdateTime\x18\x01 \x01(\tR\bdateTime\x12\x18\n" +
+	"\avoltage\x18\x02 \x01(\x01R\avoltage\x12\"\n" +
+	"\fphaseCurrent\x18\x03 \x01(\x01R\fphaseCurrent\x12&\n" +
+	"\x0eneutralCurrent\x18\x04 \x01(\x01R\x0eneutralCurrent\x12,\n" +
+	"\x11signedPowerFactor\x18\x05 \x01(\x01R\x11signedPowerFactor\x12\x1c\n" +
+	"\tfrequency\x18\x06 \x01(\x01R\tfrequency\x12$\n" +
+	"\rapparentPower\x18\a \x01(\x01R\rapparentPower\x12 \n" +
+	"\vactivePower\x18\b \x01(\x01R\vactivePower\x12 \n" +
+	"\vcumEnergyWh\x18\t \x01(\x01R\vcumEnergyWh2\xad\x04\n" +
 	"\rDLMSProcessor\x12J\n" +
 	"\aGetOBIS\x12\x1d.dlmsprocessor.GetOBISRequest\x1a\x1e.dlmsprocessor.GetOBISResponse0\x01\x12n\n" +
-	"\x13GetBlockLoadProfile\x12).dlmsprocessor.GetBlockLoadProfileRequest\x1a*.dlmsprocessor.GetBlockLoadProfileResponse0\x01B\x15Z\x13dlmsprocessor/protob\x06proto3"
+	"\x13GetBlockLoadProfile\x12).dlmsprocessor.GetBlockLoadProfileRequest\x1a*.dlmsprocessor.GetBlockLoadProfileResponse0\x01\x12n\n" +
+	"\x13GetDailyLoadProfile\x12).dlmsprocessor.GetDailyLoadProfileRequest\x1a*.dlmsprocessor.GetDailyLoadProfileResponse0\x01\x12t\n" +
+	"\x15GetBillingDataProfile\x12+.dlmsprocessor.GetBillingDataProfileRequest\x1a,.dlmsprocessor.GetBillingDataProfileResponse0\x01\x12z\n" +
+	"\x17GetInstantaneousProfile\x12-.dlmsprocessor.GetInstantaneousProfileRequest\x1a..dlmsprocessor.GetInstantaneousProfileResponse0\x01B\x15Z\x13dlmsprocessor/protob\x06proto3"
 
 var (
 	file_dlmsprocessor_proto_rawDescOnce sync.Once
@@ -529,28 +1334,49 @@ func file_dlmsprocessor_proto_rawDescGZIP() []byte {
 	return file_dlmsprocessor_proto_rawDescData
 }
 
-var file_dlmsprocessor_proto_msgTypes = make([]protoimpl.MessageInfo, 6)
+var file_dlmsprocessor_proto_msgTypes = make([]protoimpl.MessageInfo, 15)
 var file_dlmsprocessor_proto_goTypes = []any{
-	(*GetOBISRequest)(nil),              // 0: dlmsprocessor.GetOBISRequest
-	(*Meter)(nil),                       // 1: dlmsprocessor.Meter
-	(*GetOBISResponse)(nil),             // 2: dlmsprocessor.GetOBISResponse
-	(*GetBlockLoadProfileRequest)(nil),  // 3: dlmsprocessor.GetBlockLoadProfileRequest
-	(*GetBlockLoadProfileResponse)(nil), // 4: dlmsprocessor.GetBlockLoadProfileResponse
-	(*BlockLoadProfile)(nil),            // 5: dlmsprocessor.BlockLoadProfile
+	(*GetOBISRequest)(nil),                  // 0: dlmsprocessor.GetOBISRequest
+	(*Meter)(nil),                           // 1: dlmsprocessor.Meter
+	(*GetOBISResponse)(nil),                 // 2: dlmsprocessor.GetOBISResponse
+	(*GetBlockLoadProfileRequest)(nil),      // 3: dlmsprocessor.GetBlockLoadProfileRequest
+	(*GetBlockLoadProfileResponse)(nil),     // 4: dlmsprocessor.GetBlockLoadProfileResponse
+	(*BlockLoadProfile)(nil),                // 5: dlmsprocessor.BlockLoadProfile
+	(*GetDailyLoadProfileRequest)(nil),      // 6: dlmsprocessor.GetDailyLoadProfileRequest
+	(*GetDailyLoadProfileResponse)(nil),     // 7: dlmsprocessor.GetDailyLoadProfileResponse
+	(*DailyLoadProfile)(nil),                // 8: dlmsprocessor.DailyLoadProfile
+	(*GetBillingDataProfileRequest)(nil),    // 9: dlmsprocessor.GetBillingDataProfileRequest
+	(*GetBillingDataProfileResponse)(nil),   // 10: dlmsprocessor.GetBillingDataProfileResponse
+	(*BillingDataProfile)(nil),              // 11: dlmsprocessor.BillingDataProfile
+	(*GetInstantaneousProfileRequest)(nil),  // 12: dlmsprocessor.GetInstantaneousProfileRequest
+	(*GetInstantaneousProfileResponse)(nil), // 13: dlmsprocessor.GetInstantaneousProfileResponse
+	(*InstantaneousProfile)(nil),            // 14: dlmsprocessor.InstantaneousProfile
 }
 var file_dlmsprocessor_proto_depIdxs = []int32{
-	1, // 0: dlmsprocessor.GetOBISRequest.meter:type_name -> dlmsprocessor.Meter
-	1, // 1: dlmsprocessor.GetBlockLoadProfileRequest.meter:type_name -> dlmsprocessor.Meter
-	5, // 2: dlmsprocessor.GetBlockLoadProfileResponse.profile:type_name -> dlmsprocessor.BlockLoadProfile
-	0, // 3: dlmsprocessor.DLMSProcessor.GetOBIS:input_type -> dlmsprocessor.GetOBISRequest
-	3, // 4: dlmsprocessor.DLMSProcessor.GetBlockLoadProfile:input_type -> dlmsprocessor.GetBlockLoadProfileRequest
-	2, // 5: dlmsprocessor.DLMSProcessor.GetOBIS:output_type -> dlmsprocessor.GetOBISResponse
-	4, // 6: dlmsprocessor.DLMSProcessor.GetBlockLoadProfile:output_type -> dlmsprocessor.GetBlockLoadProfileResponse
-	5, // [5:7] is the sub-list for method output_type
-	3, // [3:5] is the sub-list for method input_type
-	3, // [3:3] is the sub-list for extension type_name
-	3, // [3:3] is the sub-list for extension extendee
-	0, // [0:3] is the sub-list for field type_name
+	1,  // 0: dlmsprocessor.GetOBISRequest.meter:type_name -> dlmsprocessor.Meter
+	1,  // 1: dlmsprocessor.GetBlockLoadProfileRequest.meter:type_name -> dlmsprocessor.Meter
+	5,  // 2: dlmsprocessor.GetBlockLoadProfileResponse.profile:type_name -> dlmsprocessor.BlockLoadProfile
+	1,  // 3: dlmsprocessor.GetDailyLoadProfileRequest.meter:type_name -> dlmsprocessor.Meter
+	8,  // 4: dlmsprocessor.GetDailyLoadProfileResponse.profile:type_name -> dlmsprocessor.DailyLoadProfile
+	1,  // 5: dlmsprocessor.GetBillingDataProfileRequest.meter:type_name -> dlmsprocessor.Meter
+	11, // 6: dlmsprocessor.GetBillingDataProfileResponse.profile:type_name -> dlmsprocessor.BillingDataProfile
+	1,  // 7: dlmsprocessor.GetInstantaneousProfileRequest.meter:type_name -> dlmsprocessor.Meter
+	14, // 8: dlmsprocessor.GetInstantaneousProfileResponse.profile:type_name -> dlmsprocessor.InstantaneousProfile
+	0,  // 9: dlmsprocessor.DLMSProcessor.GetOBIS:input_type -> dlmsprocessor.GetOBISRequest
+	3,  // 10: dlmsprocessor.DLMSProcessor.GetBlockLoadProfile:input_type -> dlmsprocessor.GetBlockLoadProfileRequest
+	6,  // 11: dlmsprocessor.DLMSProcessor.GetDailyLoadProfile:input_type -> dlmsprocessor.GetDailyLoadProfileRequest
+	9,  // 12: dlmsprocessor.DLMSProcessor.GetBillingDataProfile:input_type -> dlmsprocessor.GetBillingDataProfileRequest
+	12, // 13: dlmsprocessor.DLMSProcessor.GetInstantaneousProfile:input_type -> dlmsprocessor.GetInstantaneousProfileRequest
+	2,  // 14: dlmsprocessor.DLMSProcessor.GetOBIS:output_type -> dlmsprocessor.GetOBISResponse
+	4,  // 15: dlmsprocessor.DLMSProcessor.GetBlockLoadProfile:output_type -> dlmsprocessor.GetBlockLoadProfileResponse
+	7,  // 16: dlmsprocessor.DLMSProcessor.GetDailyLoadProfile:output_type -> dlmsprocessor.GetDailyLoadProfileResponse
+	10, // 17: dlmsprocessor.DLMSProcessor.GetBillingDataProfile:output_type -> dlmsprocessor.GetBillingDataProfileResponse
+	13, // 18: dlmsprocessor.DLMSProcessor.GetInstantaneousProfile:output_type -> dlmsprocessor.GetInstantaneousProfileResponse
+	14, // [14:19] is the sub-list for method output_type
+	9,  // [9:14] is the sub-list for method input_type
+	9,  // [9:9] is the sub-list for extension type_name
+	9,  // [9:9] is the sub-list for extension extendee
+	0,  // [0:9] is the sub-list for field type_name
 }
 
 func init() { file_dlmsprocessor_proto_init() }
@@ -564,7 +1390,7 @@ func file_dlmsprocessor_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_dlmsprocessor_proto_rawDesc), len(file_dlmsprocessor_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   6,
+			NumMessages:   15,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

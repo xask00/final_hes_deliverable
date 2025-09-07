@@ -8,6 +8,9 @@ option go_package = "dlmsprocessor/proto";
 service DLMSProcessor {
     rpc GetOBIS(GetOBISRequest) returns (stream GetOBISResponse);
     rpc GetBlockLoadProfile(GetBlockLoadProfileRequest) returns (stream GetBlockLoadProfileResponse);
+    rpc GetDailyLoadProfile(GetDailyLoadProfileRequest) returns (stream GetDailyLoadProfileResponse);
+    rpc GetBillingDataProfile(GetBillingDataProfileRequest) returns (stream GetBillingDataProfileResponse);
+    rpc GetInstantaneousProfile(GetInstantaneousProfileRequest) returns (stream GetInstantaneousProfileResponse);
 }
 
 message GetOBISRequest {
@@ -62,4 +65,88 @@ message BlockLoadProfile {
     double blockEnergyVahExport = 6;      // Block energy VAh-export (OBIS: 1.0.10.29.0.255)
     double averageCurrent = 7;            // Average Current (OBIS: 1.0.11.27.0.255)
     uint32 meterHealthIndicator = 8;      // Meter Health Indicator (OBIS: 0.0.96.10.1.255)
+}
+
+// Daily Load Profile Messages
+message GetDailyLoadProfileRequest {
+    repeated Meter meter = 1;
+    
+    int32 retries = 2;
+    int32 retryDelay = 3;
+    int32 connectionTimeout = 4;
+}
+
+message GetDailyLoadProfileResponse {
+    DailyLoadProfile profile = 1;
+    string meterIp = 2;  // To identify which meter the profile came from
+}
+
+message DailyLoadProfile {
+    string dateTime = 1;                      // RTC - Date & Time (OBIS: 0.0.1.0.0.255)
+    double cumulativeEnergyWhExport = 2;      // Cumulative Energy Wh-export (OBIS: 1.0.2.8.0.255)
+    double cumulativeEnergyVahExport = 3;     // Cumulative Energy VAh-export (OBIS: 1.0.10.8.0.255)
+    double cumulativeEnergyWhImport = 4;      // Cumulative Energy Wh-(import) (OBIS: 1.0.1.8.0.255)
+    double cumulativeEnergyVahImport = 5;     // Cumulative Energy VAh-(import) (OBIS: 1.0.9.8.0.255)
+}
+
+// Billing Data Profile Messages
+message GetBillingDataProfileRequest {
+    repeated Meter meter = 1;
+    
+    int32 retries = 2;
+    int32 retryDelay = 3;
+    int32 connectionTimeout = 4;
+}
+
+message GetBillingDataProfileResponse {
+    BillingDataProfile profile = 1;
+    string meterIp = 2;  // To identify which meter the profile came from
+}
+
+message BillingDataProfile {
+    string billingDate = 1;                   // Billing Date (OBIS: 0.0.0.1.2.255)
+    double averagePfForBillingPeriod = 2;     // Average PF for Billing Period (OBIS: 1.0.13.0.0.255)
+    double cumEnergyWhImport = 3;             // Cumulative Energy - Wh(Import) (OBIS: 1.0.1.8.0.255)
+    double cumEnergyWhTz1 = 4;                // Cumulative Energy - Wh - TZ1 (OBIS: 1.0.1.8.1.255)
+    double cumEnergyWhTz2 = 5;                // Cumulative Energy - Wh - TZ2 (OBIS: 1.0.1.8.2.255)
+    double cumEnergyWhTz3 = 6;                // Cumulative Energy - Wh - TZ3 (OBIS: 1.0.1.8.3.255)
+    double cumEnergyWhTz4 = 7;                // Cumulative Energy - Wh - TZ4 (OBIS: 1.0.1.8.4.255)
+    double cumEnergyVahImport = 8;            // Cumulative Energy - VAh(Import) (OBIS: 1.0.9.8.0.255)
+    double cumEnergyVahTz1 = 9;               // Cumulative Energy - VAh - TZ1 (OBIS: 1.0.9.8.1.255)
+    double cumEnergyVahTz2 = 10;              // Cumulative Energy - VAh - TZ2 (OBIS: 1.0.9.8.2.255)
+    double cumEnergyVahTz3 = 11;              // Cumulative Energy - VAh - TZ3 (OBIS: 1.0.9.8.3.255)
+    double cumEnergyVahTz4 = 12;              // Cumulative Energy - VAh - TZ4 (OBIS: 1.0.9.8.4.255)
+    double mdw = 13;                          // MD W (OBIS: 1.0.1.6.0.255)
+    string mdwDateTime = 14;                  // MD W - Date & Time (OBIS: 1.0.1.6.0.255)
+    double mdva = 15;                         // MD VA (OBIS: 1.0.9.6.0.255)
+    string mdvaDateTime = 16;                 // MD VA - Date & Time (OBIS: 1.0.9.6.0.255)
+    double billingPowerOnDuration = 17;       // Billing Power On Duration (OBIS: 0.0.94.91.13.255)
+    double cumEnergyWh = 18;                  // Cumulative Energy Wh (OBIS: 1.0.2.8.0.255)
+    double cumEnergyVah = 19;                 // Cumulative Energy VAh (OBIS: 1.0.10.8.0.255)
+}
+
+// Instantaneous Profile Messages
+message GetInstantaneousProfileRequest {
+    repeated Meter meter = 1;
+    
+    int32 retries = 2;
+    int32 retryDelay = 3;
+    int32 connectionTimeout = 4;
+}
+
+message GetInstantaneousProfileResponse {
+    InstantaneousProfile profile = 1;
+    string meterIp = 2;  // To identify which meter the profile came from
+}
+
+message InstantaneousProfile {
+    string dateTime = 1;                      // RTC - Date & Time (OBIS: 0.0.1.0.0.255)
+    double voltage = 2;                       // Voltage (instantaneous) (OBIS: 1.0.12.7.0.255)
+    double phaseCurrent = 3;                  // Phase Current (instantaneous) (OBIS: 1.0.11.7.0.255)
+    double neutralCurrent = 4;                // Neutral Current (instantaneous) (OBIS: 1.0.91.7.0.255)
+    double signedPowerFactor = 5;             // Signed Power Factor (instantaneous) (OBIS: 1.0.13.7.0.255)
+    double frequency = 6;                     // Frequency (instantaneous) (OBIS: 1.0.14.7.0.255)
+    double apparentPower = 7;                 // Apparent Power - VA (instantaneous) (OBIS: 1.0.9.7.0.255)
+    double activePower = 8;                   // Active Power - W (instantaneous) (OBIS: 1.0.1.7.0.255)
+    double cumEnergyWh = 9;                   // Cumulative Energy - Wh (OBIS: 1.0.1.8.0.255)
 }
